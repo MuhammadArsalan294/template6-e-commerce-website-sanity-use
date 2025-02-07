@@ -5,7 +5,7 @@ import Image from "next/image";
 interface Product {
   id: string;
   title: string;
-  slug: string;
+  slug: { current: string };
   description: string;
   image: string;
   price: number;
@@ -18,18 +18,23 @@ interface ProductPageProps {
 
 // Fetch product data
 async function getProduct(slug: string): Promise<Product | null> {
-  return client.fetch(
-    groq`*[_type == "product" && slug.current == $slug][0]{
-      id,
-      title,
-      price,
-      description,
-      discountPercentage,
-      "image": productImage.asset->url,
-      "slug": slug.current
-    }`,
-    { slug }
-  );
+  try {
+    return await client.fetch(
+      groq`*[_type == "product" && slug.current == $slug][0]{
+        id,
+        title,
+        price,
+        description,
+        discountPercentage,
+        "image": productImage.asset->url,
+        "slug": { "current": slug.current }
+      }`,
+      { slug }
+    );
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return null;
+  }
 }
 
 // Product Page Component
@@ -46,7 +51,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    
     <div className="max-w-screen-xl mx-auto p-4 md:p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Product Image */}
@@ -61,7 +65,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         {/* Product Details */}
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold text-gray-800 ">{product.title}</h1>
+          <h1 className="text-4xl font-bold text-gray-800">{product.title}</h1>
           <p className="text-gray-600 text-sm">{product.description}</p>
 
           {/* Price & Discount */}
