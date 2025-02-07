@@ -19,7 +19,7 @@ interface ProductPageProps {
 // Fetch product data
 async function getProduct(slug: string): Promise<Product | null> {
   try {
-    return await client.fetch(
+    const product = await client.fetch(
       groq`*[_type == "product" && slug.current == $slug][0]{
         id,
         title,
@@ -31,6 +31,7 @@ async function getProduct(slug: string): Promise<Product | null> {
       }`,
       { slug }
     );
+    return product || null;
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;
