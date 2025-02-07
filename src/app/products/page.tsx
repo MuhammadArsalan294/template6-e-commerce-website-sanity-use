@@ -6,7 +6,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 
-
 interface Product {
   id: string;
   title: string;
@@ -46,18 +45,11 @@ const Products = () => {
     fetchProduct();
   }, []);
 
-  const handleAddTOCart = (e: React.MouseEvent, product: Product) => {
-    e.preventDefault();
-    //addToCart()
-    //alert("Product added")
-   
-  }
-
+ 
   return (
     <div className="max-w-screen-xl mx-auto px-4 py-8 text-center">
       <h2 className="text-[40px] text-[#3A3A3A] font-bold mb-8">Our Products</h2>
 
-      {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
         {products.map((product) => (
           <Link key={product.id} href={`/products/${product.slug}`}>
@@ -72,8 +64,9 @@ const Products = () => {
               </div>
 
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center space-y-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="bg-white text-[#B88E2F] font-bold py-2 px-4 w-[202px] h-[48px] flex justify-center items-center shadow-md bg-gradient-to-r rounded-lg  hover:shadow-lg hover:scale-110 transition-transform duration-300 ease-in-out"
-                onClick={(e) => handleAddTOCart(e, product)}
+                <button
+                  className="bg-white text-[#B88E2F] font-bold py-2 px-4 w-[202px] h-[48px] flex justify-center items-center shadow-md bg-gradient-to-r rounded-lg hover:shadow-lg hover:scale-110 transition-transform duration-300 ease-in-out"
+               
                 >
                   Add to Cart
                 </button>
@@ -84,13 +77,11 @@ const Products = () => {
                 <p className="text-sm text-[#666666] mb-2 line-clamp-2">{product.description}</p>
                 <p className="text-lg font-bold text-[#333333]">Rp {product.price.toLocaleString()}</p>
               </div>
-              
             </div>
           </Link>
         ))}
       </div>
 
-      {/* Show More Button */}
       <div className="flex justify-center mt-8">
         <Link href="/shop" passHref>
           <button className="w-[245px] h-[48px] bg-white border-[1px] border-[#B88E2F] text-[#B88E2F] hover:text-white hover:bg-[#B88E2F] transition-colors">
