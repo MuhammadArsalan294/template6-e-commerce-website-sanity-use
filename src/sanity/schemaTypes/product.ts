@@ -52,6 +52,7 @@ export const product = defineType({
             name:"isNew",
             type:"boolean",
             title:"New Badge",
-        }
+        },
+        
     ]
 })
