@@ -4,8 +4,8 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { addToCart } from "../addtocart/addToCart";
-import Product from "../product/page";
+
+
 
 interface Product {
   id: string;
@@ -48,8 +48,8 @@ const Products = () => {
 
   const handleAddTOCart = (e: React.MouseEvent, product: Product) => {
     e.preventDefault();
-    addToCart(product)
-    alert("Product added")
+    //addToCart()
+    //alert("Product added")
    
   }
 
